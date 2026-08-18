@@ -28,7 +28,7 @@ test("server-renders the voice blackjack invite", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Midnight Voice Blackjack<\/title>/i);
+  assert.match(html, /<title>Phoker Voice Blackjack<\/title>/i);
   assert.match(html, /Mina is calling/);
   assert.match(html, /Voice blackjack/);
   assert.match(html, /Answer/);

@@ -493,7 +493,7 @@ export default function Home() {
     if (!callActiveRef.current) return;
     window.setTimeout(() => {
       speakDealer(
-        "Welcome to Midnight. Ten credits are on the table. You have sixteen. Say hit, stand, or double.",
+        "Welcome to Phoker. Ten credits are on the table. You have sixteen. Say hit, stand, or double.",
       );
     }, 220);
   }, [connectVapi, revealControls, speakDealer, startBrowserVoice]);
@@ -609,7 +609,7 @@ export default function Home() {
             <div className="incoming-vignette" />
           </div>
           <div className="incoming-copy">
-            <span className="eyebrow">MIDNIGHT TABLE</span>
+            <span className="eyebrow">PHOKER TABLE</span>
             <h1>Mina is calling</h1>
             <p>Voice blackjack · 100 play credits</p>
           </div>

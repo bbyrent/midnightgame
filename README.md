@@ -1,4 +1,4 @@
-# Midnight Voice Blackjack
+# Phoker Voice Blackjack
 
 A mobile-first hackathon MVP for voice-controlled blackjack opened from an iMessage mini-app card. The demo presents an incoming call from Mina, an AI dealer, then runs a fixed-wager play-credit hand with no blackjack buttons.
 

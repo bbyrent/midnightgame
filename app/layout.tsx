@@ -14,16 +14,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const imageUrl = `${protocol}://${host}/og.png`;
 
   return {
-    title: "Midnight Voice Blackjack",
+    title: "Phoker Voice Blackjack",
     description:
       "A voice-first blackjack call opened from iMessage, powered by Vapi-ready conversational audio.",
-    applicationName: "Midnight Voice Blackjack",
+    applicationName: "Phoker Voice Blackjack",
     icons: {
       icon: "/dealer-mina.png",
       shortcut: "/dealer-mina.png",
     },
     openGraph: {
-      title: "Midnight Voice Blackjack",
+      title: "Phoker Voice Blackjack",
       description: "Text the table. Answer the call. Play blackjack with your voice.",
       type: "website",
       images: [
@@ -31,13 +31,13 @@ export async function generateMetadata(): Promise<Metadata> {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: "Midnight Voice Blackjack with Mina, the AI dealer",
+          alt: "Phoker Voice Blackjack with Mina, the AI dealer",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Midnight Voice Blackjack",
+      title: "Phoker Voice Blackjack",
       description: "Text the table. Answer the call. Play blackjack with your voice.",
       images: [imageUrl],
     },
