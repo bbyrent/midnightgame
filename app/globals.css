@@ -47,6 +47,7 @@ button:focus-visible {
   place-items: center;
   padding: 26px;
   overflow: hidden;
+  overflow: clip;
   background:
     radial-gradient(circle at 20% 18%, rgba(92, 56, 181, 0.32), transparent 32%),
     radial-gradient(circle at 80% 84%, rgba(7, 126, 90, 0.23), transparent 34%),
@@ -191,6 +192,13 @@ button:focus-visible {
   animation: ambient-breathe 8s ease-in-out infinite alternate;
 }
 
+.incoming-visual .incoming-blink {
+  opacity: 0;
+  animation:
+    ambient-breathe 8s ease-in-out infinite alternate,
+    mina-blink 6.8s linear infinite;
+}
+
 .incoming-vignette {
   position: absolute;
   inset: 0;
@@ -308,6 +316,7 @@ button:focus-visible {
 /* Live table */
 .game-frame {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 18px 62px minmax(245px, 35%) minmax(260px, 1fr) 106px;
   background: #090a14;
   user-select: none;
@@ -316,6 +325,7 @@ button:focus-visible {
 .game-header {
   position: relative;
   z-index: 10;
+  grid-row: 2;
   display: grid;
   grid-template-columns: 42px 1fr 42px;
   align-items: center;
@@ -367,18 +377,40 @@ button:focus-visible {
 
 .dealer-stage {
   position: relative;
+  grid-row: 3;
+  min-height: 0;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   background: #08080e;
 }
 
-.dealer-loop {
+.dealer-portrait {
+  position: absolute;
+  inset: 0;
+  transform: scale(1.035);
+  transform-origin: 50% 38%;
+  will-change: transform;
+  animation: dealer-idle 8.5s ease-in-out infinite alternate;
+}
+
+.dealer-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 36%;
-  transform: scale(1.08);
-  animation: dealer-loop 7.5s ease-in-out infinite alternate;
+  object-position: 50% 32%;
+}
+
+.dealer-image-blink {
+  opacity: 0;
+  animation: mina-blink 6.8s linear infinite;
+}
+
+.dealer-stage.mode-dealer-speaking .dealer-portrait {
+  animation: dealer-speaking 1.55s ease-in-out infinite;
+}
+
+.dealer-stage.mode-listening .dealer-portrait {
+  animation: dealer-listening 5.4s ease-in-out infinite alternate;
 }
 
 .dealer-vignette {
@@ -463,6 +495,7 @@ button:focus-visible {
 
 .felt-table {
   position: relative;
+  grid-row: 4;
   min-height: 0;
   overflow: hidden;
   border-top: 1px solid rgba(110, 255, 201, 0.16);
@@ -718,6 +751,7 @@ button:focus-visible {
 .voice-tray {
   position: relative;
   z-index: 9;
+  grid-row: 5;
   display: grid;
   grid-template-columns: 58px 1fr;
   align-items: center;
@@ -969,9 +1003,27 @@ button:focus-visible {
   100% { transform: scale(1.075) translateY(-7px); }
 }
 
-@keyframes dealer-loop {
-  0% { transform: scale(1.08) translate3d(0, 0, 0); }
-  100% { transform: scale(1.12) translate3d(0, -5px, 0); }
+@keyframes dealer-idle {
+  0% { transform: scale(1.035) translate3d(0, 1px, 0) rotate(0deg); }
+  50% { transform: scale(1.05) translate3d(-1px, -3px, 0) rotate(-0.12deg); }
+  100% { transform: scale(1.04) translate3d(2px, -1px, 0) rotate(0.1deg); }
+}
+
+@keyframes dealer-listening {
+  0% { transform: scale(1.04) translate3d(-1px, 0, 0) rotate(-0.08deg); }
+  100% { transform: scale(1.055) translate3d(1px, -3px, 0) rotate(0.1deg); }
+}
+
+@keyframes dealer-speaking {
+  0%, 100% { transform: scale(1.045) translate3d(0, 0, 0) rotate(0deg); }
+  25% { transform: scale(1.052) translate3d(-1px, -2px, 0) rotate(-0.1deg); }
+  55% { transform: scale(1.048) translate3d(1px, 0, 0) rotate(0.08deg); }
+  78% { transform: scale(1.055) translate3d(0, -3px, 0) rotate(-0.04deg); }
+}
+
+@keyframes mina-blink {
+  0%, 42.8%, 45.2%, 78%, 80%, 100% { opacity: 0; }
+  43.5%, 44.5%, 78.7%, 79.3% { opacity: 1; }
 }
 
 @keyframes live-pulse {

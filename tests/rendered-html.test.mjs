@@ -45,3 +45,20 @@ test("keeps game actions voice-only", async () => {
   assert.match(page, /@vapi-ai\/web/);
   assert.doesNotMatch(page, />\s*(HIT|STAND|DOUBLE)\s*</);
 });
+
+test("keeps Mina visible and animated after the call is answered", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const [page, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /dealer-mina-blink\.png/);
+  assert.match(page, /dealer-stage mode-\$\{voiceMode\}/);
+  assert.match(page, /experience-shell.*scrollTo\(0, 0\)/s);
+  assert.match(styles, /\.game-header\s*\{[^}]*grid-row:\s*2;/s);
+  assert.match(styles, /\.dealer-stage\s*\{[^}]*grid-row:\s*3;/s);
+  assert.match(styles, /\.felt-table\s*\{[^}]*grid-row:\s*4;/s);
+  assert.match(styles, /\.voice-tray\s*\{[^}]*grid-row:\s*5;/s);
+  assert.match(styles, /@keyframes mina-blink/);
+});

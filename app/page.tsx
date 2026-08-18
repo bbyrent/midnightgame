@@ -253,6 +253,15 @@ export default function Home() {
     mutedRef.current = muted;
   }, [muted]);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      document.querySelector<HTMLElement>(".experience-shell")?.scrollTo(0, 0);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [callStage]);
+
   const restartBrowserRecognition = useCallback(() => {
     const recognition = recognitionRef.current;
     if (
@@ -475,17 +484,18 @@ export default function Home() {
     setCallStage("connecting");
     setVoiceMode("connecting");
     callActiveRef.current = true;
+    setCallStage("active");
+    revealControls();
 
     const connectedToVapi = await connectVapi();
     if (!connectedToVapi) await startBrowserVoice();
 
-    setCallStage("active");
-    revealControls();
+    if (!callActiveRef.current) return;
     window.setTimeout(() => {
       speakDealer(
         "Welcome to Midnight. Ten credits are on the table. You have sixteen. Say hit, stand, or double.",
       );
-    }, 520);
+    }, 220);
   }, [connectVapi, revealControls, speakDealer, startBrowserVoice]);
 
   const endCall = useCallback(async () => {
@@ -581,8 +591,17 @@ export default function Home() {
           </div>
           <div className="incoming-visual">
             <Image
+              className="incoming-base"
               src="/dealer-mina.png"
               alt="Mina, the AI blackjack dealer"
+              fill
+              priority
+              sizes="(max-width: 520px) 100vw, 430px"
+            />
+            <Image
+              className="incoming-blink"
+              src="/dealer-mina-blink.png"
+              alt=""
               fill
               priority
               sizes="(max-width: 520px) 100vw, 430px"
@@ -676,15 +695,25 @@ export default function Home() {
           <span className="header-icon more-icon" aria-hidden="true">•••</span>
         </header>
 
-        <div className="dealer-stage">
-          <Image
-            className="dealer-loop"
-            src="/dealer-mina.png"
-            alt="Mina, your AI blackjack dealer"
-            fill
-            priority
-            sizes="(max-width: 520px) 100vw, 430px"
-          />
+        <div className={`dealer-stage mode-${voiceMode}`}>
+          <div className="dealer-portrait">
+            <Image
+              className="dealer-image dealer-image-base"
+              src="/dealer-mina.png"
+              alt="Mina, your AI blackjack dealer"
+              fill
+              priority
+              sizes="(max-width: 520px) 100vw, 430px"
+            />
+            <Image
+              className="dealer-image dealer-image-blink"
+              src="/dealer-mina-blink.png"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 520px) 100vw, 430px"
+            />
+          </div>
           <div className="dealer-vignette" />
           <div className="live-pill"><span /> LIVE</div>
           <div className="dealer-identity">
